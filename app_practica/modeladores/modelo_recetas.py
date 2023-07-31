@@ -66,28 +66,6 @@ class Receta:
     
         return connectToMySQL(BASE_DATOS).query_db(query, data)
     
-    @classmethod
-    def obtener_uno_con_usuario(cls, data):
-        query ="""
-                SELECT *
-                FROM recetas r JOIN usuarios u
-                    ON r.id_usuario = u.id
-                WHERE r.id = %(id)s
-                """
-        resultado = connectToMySQL(BASE_DATOS).query_db(query, data) #Necesita un objeto // Se pone el diccionario usado anteriormente
-        renglon =resultado[0]
-        receta = Receta(renglon)
-        data_usuario ={
-                "id" : renglon ['u.id'], 
-                "nombre" : renglon ['u.nombre'],
-                "apellido" :renglon ['apellido'],
-                "email" :renglon ['email'],
-                "password" :renglon ['password'],
-                "fecha_creacion" :renglon ['u.fecha_creacion'],
-                "fecha_actualizacion" :renglon ['u.fecha_actualizacion'],   
-                }
-        receta.usuario = Usuario(data_usuario)
-        return receta
 
     @classmethod
     def obtener_uno(cls, data):
